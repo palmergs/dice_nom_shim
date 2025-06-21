@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
 
   spec.summary = "Ruby shim to the dice-nom rust crate"
   spec.description = "Allow for random dice rolls using the dice-nom rust library"
-  spec.homepage = "https://github.com/palemrgs/dice_nom_shim"
+  spec.homepage = "https://github.com/palmergs/dice_nom_shim"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.2.0"
   spec.required_rubygems_version = ">= 3.3.11"
