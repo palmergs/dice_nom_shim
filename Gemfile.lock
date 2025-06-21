@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dice_nom_shim (0.1.0)
+    dice_nom_shim (0.1.2)
       rb_sys (~> 0.9.91)
 
 GEM

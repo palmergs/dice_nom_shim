@@ -185,9 +185,9 @@ checksum = "b05b61dc5112cbb17e4b6cd61790d9845d13888356391624cbe7e41efeac1e75"
 
 [[package]]
 name = "dice-nom"
-version = "0.1.0"
+version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "136529ff0638f621f6250df20740ed64fcbac4edc88f1f90909b96fb83220587"
+checksum = "3fc38ea3cf5a5ebd5df2249291dc160b65482f1cca8ae588f30a8d3effcfc91a"
 dependencies = [
  "clap",
  "nom 6.1.2",
