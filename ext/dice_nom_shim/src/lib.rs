@@ -31,7 +31,7 @@ struct Histo {
 }
 
 impl Histo {
-    pub fn build(roll: String, count: u32) -> String {
+    pub fn build(roll: String, count: u32) -> Histo {
         let mut histo = Histo {
             min: MAX,
             max: 0,
@@ -40,12 +40,9 @@ impl Histo {
         };
         let g = match generator_parser(roll.as_ref()) {
             Ok((_, g)) => g,
-            Err(e) => return format!("{{\"error\": \"{}\"}}", e),
+            Err(_) => return histo,
         };
         let mut rng = rand::rng();
-        let results = g.generate(&mut rng);
-        let result_json = serde_json::to_string(&results);
-
         for _ in 0..count {
             let v = g.generate(&mut rng).sum();
             if v < histo.min {
@@ -67,23 +64,32 @@ impl Histo {
                 }
             }
         }
-        let histo_json = serde_json::to_string(&histo);
-
-        let result_error = format!("{{\"error\": \"could not parse result '{}'\"}}", roll);
-        let histo_error = format!(
-            "{{\"error\": \"could not parse result '{}' count={}\"}}",
-            roll, count
-        );
-        format!(
-            "[{}, {}]",
-            result_json.unwrap_or(result_error),
-            histo_json.unwrap_or(histo_error)
-        )
+        histo
     }
 }
 
 fn histo(roll: String) -> String {
-    Histo::build(roll, 2000)
+    let num = 2000.0;
+    let histo = Histo::build(roll, num as u32);
+    let mut chart_data = Vec::new();
+    let mut total = 100.0;
+    for k in histo.min..=histo.max {
+        let count = histo.map.get(&k).unwrap_or(&0);
+        let percentage = (*count as f64 / num) * 100.0;
+        chart_data.push(serde_json::json!({
+          "value": k,
+          "count": count,
+          "percentage": percentage,
+          "total": total,
+        }));
+        total = total - percentage;
+    }
+
+    let json = serde_json::to_string(&chart_data);
+    match json {
+        Ok(json) => format!("{}", json),
+        Err(err) => format!("{{\"error\": \"{}\"}}", err),
+    }
 }
 
 #[magnus::init]
