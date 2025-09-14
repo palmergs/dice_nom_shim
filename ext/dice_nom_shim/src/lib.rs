@@ -69,7 +69,7 @@ impl Histo {
 }
 
 fn histo(roll: String) -> String {
-    let num = 2000.0;
+    let num = 5000.0;
     let histo = Histo::build(roll, num as u32);
     let mut chart_data = Vec::new();
     let mut total = 100.0;
