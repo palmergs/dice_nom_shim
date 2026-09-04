@@ -13,6 +13,18 @@ RSpec.describe DiceNomShim do
     expect(hsh[0].dig("lhs", "total")).to be >= 2
   end
 
+  it "rolls percentile dice" do
+    hsh = JSON.parse(DiceNomShim.roll("d100"))
+    puts hsh
+    expect(hsh[0].dig("lhs", "total")).to be >= 1
+  end
+
+  it "rolls arbitrary dice" do
+    hsh = JSON.parse(DiceNomShim.roll("10d17"))
+    puts hsh[0].dig("lhs", "values")
+    expect(hsh[0].dig("lhs", "total")).to be >= 5
+  end
+
   it "builds a histogram" do
     hsh = JSON.parse(DiceNomShim.histo("2d6**"))
     puts hsh

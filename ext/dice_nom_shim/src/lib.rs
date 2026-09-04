@@ -10,11 +10,7 @@ fn roll(roll: String) -> String {
         Err(e) => return format!("{{\"error\": \"{}\"}}", e),
     };
     let mut rng = rand::rng();
-    let mut results_array = Vec::new();
-    let n = 1;
-    for _ in 0..n {
-        results_array.push(g.generate(&mut rng));
-    }
+    let results_array = vec![g.generate(&mut rng)];
     let json = serde_json::to_string(&results_array);
     match json {
         Ok(json) => format!("{}", json),
